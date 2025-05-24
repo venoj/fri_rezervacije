@@ -1,0 +1,213 @@
+/* frontend/src/styles/FilterAndDateControls.css */
+.filters {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filters-group {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-direction: column;
+  text-align: center;
+  min-width: 180px;
+}
+
+.filter-item label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.5rem;
+}
+
+.filter-item label svg {
+  color: #e63946;
+}
+
+.filter-select,
+.date-input {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid #e3eafc;
+  border-radius: 6px;
+  background: #f8fafd;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease;
+  min-width: 150px;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.filter-select:focus,
+.date-input:focus {
+  outline: none;
+  border-color: #e63946;
+  box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+  background: #fff;
+}
+
+.filter-select:hover,
+.date-input:hover {
+  border-color: #e63946;
+  background: #fff;
+}
+
+.date-selector {
+  flex-direction: row !important;
+  gap: 0.5rem !important;
+  padding: 0.5rem;
+  background: #f8fafd;
+  border-radius: 6px;
+  border: 1.5px solid #e3eafc;
+}
+
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-input-icon {
+  position: absolute;
+  left: 10px;
+  color: #e63946;
+  pointer-events: none;
+}
+
+.date-input {
+  padding-left: 2.5rem !important;
+  min-width: 140px !important;
+  height: 40px !important;
+}
+
+.nav-button, .today-button {
+  padding: 0.6rem;
+  background: #e63946;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+
+.nav-button:hover {
+  background: #cc3340;
+}
+
+.today-button {
+  background: #fff;
+  color: #e63946;
+  border: 1.5px solid #e63946;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+}
+
+.today-button:hover {
+  background: #e63946;
+  color: white;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filters-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .filter-item {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: unset;
+  }
+  
+  .filter-item label {
+    margin-bottom: 0;
+    min-width: 80px;
+  }
+  
+  .filter-select,
+  .date-input {
+    min-width: 120px;
+    padding: 0.5rem 0.6rem;
+  }
+  
+  .date-selector {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5rem;
+  }
+  
+  .nav-button, .today-button {
+    padding: 0.4rem;
+    min-width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+  
+  .today-button {
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .date-input {
+    min-width: 110px !important;
+    height: 35px !important;
+    padding: 0.5rem 0.6rem 0.5rem 2.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters {
+    padding: 0.6rem;
+  }
+  
+  .filter-item label span {
+    display: none;
+  }
+  
+  .filter-item label svg {
+    margin-right: 0;
+  }
+  
+  .today-button span {
+    display: none;
+  }
+  
+  .today-button {
+    padding: 0.4rem;
+  }
+} 

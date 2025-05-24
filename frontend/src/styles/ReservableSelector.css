@@ -1,0 +1,249 @@
+/* ReservableSelector styles */
+
+.reservable-selector {
+  width: 100%;
+  padding: 0 0 12px 0;
+  font-family: inherit;
+}
+
+.selector-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.search-container {
+  width: 100%;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 6px 32px 6px 10px;
+  border: 1.5px solid #e3eafc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f8fafd;
+  color: #222;
+  outline: none;
+  transition: border 0.2s;
+}
+.search-input:focus {
+  border-color: #e63946;
+}
+
+.search-icon {
+  position: absolute;
+  right: 8px;
+  color: #e63946;
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 28px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.clear-search-btn:hover {
+  color: #cc3340;
+}
+
+.bulk-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+.select-all-btn {
+  background: #ffebee;
+  color: #e63946;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.select-all-btn.selected {
+  background: #e63946;
+  color: #fff;
+}
+.selection-count {
+  font-size: 0.95rem;
+  color: #333;
+  margin-left: 4px;
+}
+
+.reservable-pagination-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0 8px 0;
+  gap: 12px;
+}
+.reservable-pagination-count {
+  font-size: 0.98rem;
+  color: #e63946;
+  font-weight: 500;
+}
+.reservable-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pagination-btn {
+  background: #ffebee;
+  color: #e63946;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.pagination-btn:disabled {
+  background: #f3f3f3;
+  color: #aaa;
+  cursor: not-allowed;
+}
+.pagination-page {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.97rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.reservables-list {
+  margin-top: 8px;
+}
+.reservables-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.reservable-item {
+  padding: 6px 0;
+  margin-bottom: 0;
+  background: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  border-radius: 0;
+}
+.reservable-item:last-child {
+  border-bottom: none;
+}
+.reservable-item:hover {
+    background: #f0f0f0;
+}
+.reservable-item.selected {
+  background: #ffebee;
+  color: #e63946;
+}
+.reservable-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.reservable-info {
+  display: flex;
+  gap: 2px;
+  width: 100%;
+}
+.checkmark {
+  color: #e63946;
+  font-weight: bold;
+  margin-right: 6px;
+}
+.reservable-name {
+  font-weight: 600;
+  color: #222;
+  font-size: 1rem;
+}
+.reservable-item.selected .reservable-name {
+  color: #e63946;
+}
+.reservable-description {
+  font-size: 0.85rem;
+  color: #666;
+}
+.reservable-location {
+  font-size: 0.8rem;
+  color: #e63946;
+  margin-top: 2px;
+}
+
+.no-results {
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  margin: 18px 0;
+}
+.clear-results-btn {
+  background: #ffebee;
+  color: #e63946;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+.clear-results-btn:hover {
+  background: #e63946;
+  color: #fff;
+}
+
+.selection-summary {
+  margin-top: 12px;
+  background: #f0f0f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.summary-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.summary-text {
+  font-size: 0.97rem;
+  color: #e63946;
+  font-weight: 500;
+}
+.clear-selection-btn {
+  background: #ffebee;
+  color: #e63946;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.clear-selection-btn:hover {
+  background: #e63946;
+  color: #fff;
+} 
