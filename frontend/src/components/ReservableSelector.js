@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ReservableSelector.css';
 
-function ReservableSelector({ reservables, onReservableSelect, selectedReservables = [], count = 0, next, previous, onNextPage, onPrevPage, currentPage = 1, selectedType }) {
+function ReservableSelector({ reservables, onReservableSelect, selectedReservables = [], selectedType }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectAll, setSelectAll] = useState(false);
 
@@ -47,20 +47,6 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
               </button>
             )}
           </div>
-        </div>
-        
-      </div>
-
-      <div className="reservable-pagination-info">
-        <span className="reservable-pagination-count">
-          {reservables?.results?.length > 0 ? ((currentPage - 1) * reservables.results.length + 1) : 0}
-          -{reservables?.results?.length > 0 ? ((currentPage - 1) * reservables.results.length + reservables.results.length) : 0}
-          {' '} / {count}
-        </span>
-        <div className="reservable-pagination-controls">
-          <button onClick={onPrevPage} disabled={!previous} className="pagination-btn pagination-btn-prev">⟨</button>
-          <span className="pagination-page">Stran {currentPage}</span>
-          <button onClick={onNextPage} disabled={!next} className="pagination-btn pagination-btn-next">⟩</button>
         </div>
       </div>
 

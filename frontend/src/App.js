@@ -17,7 +17,6 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [startDate, setStartDate] = useState(new Date());
-	const [reservablesPageUrl, setReservablesPageUrl] = useState(null);
 
 	const typeLabels = {
 		classroom: 'učilnica',
@@ -43,21 +42,31 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		setReservablesPageUrl(null);
-	}, [selectedType, selectedSet]);
-
-	useEffect(() => {
 		const fetchReservables = async () => {
 			setLoading(true);
 			try {
-				let data;
-				if (reservablesPageUrl) {
-					const response = await fetch(reservablesPageUrl);
-					data = await response.json();
-				} else {
-					data = await getReservablesByType(selectedSet, selectedType);
+				let allResults = [];
+				let currentUrl = null;
+				let totalCount = 0;
+
+				const initialData = await getReservablesByType(selectedSet, selectedType);
+				allResults = [...initialData.results];
+				totalCount = initialData.count;
+				currentUrl = initialData.next;
+
+				while (currentUrl) {
+					const response = await fetch(currentUrl);
+					const data = await response.json();
+					allResults = [...allResults, ...data.results];
+					currentUrl = data.next;
 				}
-				setReservables(data);
+
+				setReservables({
+					results: allResults,
+					count: totalCount,
+					next: null,
+					previous: null
+				});
 				setLoading(false);
 			} catch (error) {
 				console.error('Error fetching reservables:', error);
@@ -67,7 +76,7 @@ function App() {
 		};
 
 		fetchReservables();
-	}, [selectedType, selectedSet, reservablesPageUrl]);
+	}, [selectedType, selectedSet]);
 
 	const handleReservableChange = (reservableId) => {
 		setSelectedReservables(prev => {
@@ -97,13 +106,6 @@ function App() {
 
 	const handleToday = () => {
 		setStartDate(new Date());
-	};
-
-	const handleReservablesNext = () => {
-		if (reservables.next) setReservablesPageUrl(reservables.next);
-	};
-	const handleReservablesPrev = () => {
-		if (reservables.previous) setReservablesPageUrl(reservables.previous);
 	};
 
 	const getSelectedReservableObjects = () => {
@@ -157,12 +159,6 @@ function App() {
 								reservables={reservables} 
 								onReservableSelect={handleReservableChange}
 								selectedReservables={selectedReservables}
-								count={reservables.count}
-								next={reservables.next}
-								previous={reservables.previous}
-								onNextPage={handleReservablesNext}
-								onPrevPage={handleReservablesPrev}
-								currentPage={currentPage}
 								selectedType={selectedType}
 							/>
 						)}
