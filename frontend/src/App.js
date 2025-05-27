@@ -1,4 +1,3 @@
-// frontend/src/App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ReservableSelector from './components/ReservableSelector';
@@ -44,7 +43,7 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		setReservablesPageUrl(null); // reset page on type/set change
+		setReservablesPageUrl(null);
 	}, [selectedType, selectedSet]);
 
 	useEffect(() => {
@@ -69,16 +68,6 @@ function App() {
 
 		fetchReservables();
 	}, [selectedType, selectedSet, reservablesPageUrl]);
-
-	const handleSetChange = (e) => {
-		setSelectedSet(e.target.value);
-		setSelectedReservables([]);
-	};
-
-	const handleTypeChange = (e) => {
-		setSelectedType(e.target.value);
-		setSelectedReservables([]);
-	};
 
 	const handleReservableChange = (reservableId) => {
 		setSelectedReservables(prev => {
@@ -110,7 +99,6 @@ function App() {
 		setStartDate(new Date());
 	};
 
-	// Pagination handlers
 	const handleReservablesNext = () => {
 		if (reservables.next) setReservablesPageUrl(reservables.next);
 	};
@@ -118,24 +106,19 @@ function App() {
 		if (reservables.previous) setReservablesPageUrl(reservables.previous);
 	};
 
-	// Get selected reservable objects for grid display
 	const getSelectedReservableObjects = () => {
 		if (!reservables.results) return [];
 		
-		// If no specific reservables selected, return all
 		if (selectedReservables.length === 0) {
 			return reservables.results;
 		}
 		
-		// Return only selected reservables
 		return reservables.results.filter(r => selectedReservables.includes(r.id));
 	};
 
-	// Calculate current page
 	const currentPage = (() => {
 		if (!reservables.results || reservables.results.length === 0) return 1;
 		if (!reservables.previous) return 1;
-		// Try to extract page from next/previous URL
 		const prevUrl = new URL(reservables.previous, window.location.origin);
 		const prevPage = prevUrl.searchParams.get('page');
 		return prevPage ? parseInt(prevPage, 10) + 1 : 2;

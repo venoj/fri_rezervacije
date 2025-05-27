@@ -1,6 +1,5 @@
 const API_BASE_URL = '/api';
 
-// Funkcija za pridobivanje rezervacij
 export const getReservations = async (start, end, reservableId) => {
   try {
     const queryParams = new URLSearchParams({
@@ -32,7 +31,6 @@ export const getReservations = async (start, end, reservableId) => {
   }
 };
 
-// Funkcija za pridobivanje rezervabilnih objektov glede na tip
 export const getReservablesByType = async (setName, typeName) => {
   try {
     const response = await fetch(
@@ -50,7 +48,6 @@ export const getReservablesByType = async (setName, typeName) => {
   }
 };
 
-// Funkcija za pridobivanje vseh naborov
 export const getReservableSets = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/sets/`);

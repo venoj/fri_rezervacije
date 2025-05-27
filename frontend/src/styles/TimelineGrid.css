@@ -213,7 +213,6 @@
     background-color: #f8d7da;
 }
 
-/* Modal styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -297,7 +296,6 @@
     font-size: 1rem;
 }
 
-/* Enhanced reservation display */
 .reservation-info {
     display: flex;
     flex-direction: column;
@@ -338,12 +336,9 @@
     align-items: center;
     justify-content: center;
     padding: 48px 16px;
-    /* background: #fff5f5; */
     border-radius: 12px;
     margin: 32px 0;
     min-height: 180px;
-    /* box-shadow: 0 2px 8px rgba(230, 57, 70, 0.06); */
-    /* border: 1.5px solid #ffcdd2; */
 }
 
 .timeline-grid-spinner {
@@ -352,7 +347,6 @@
 }
 
 .timeline-grid-loading-text {
-    /* color: #e63946; */
     font-size: 1.15rem;
     font-weight: 600;
     margin-top: 4px;
@@ -439,7 +433,6 @@
     text-align: center;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .timeline-grid-container {
         max-width: 100%;
@@ -460,7 +453,6 @@
     }
 }
 
-/* High contrast mode for accessibility */
 @media (prefers-contrast: high) {
     .grid-slot-cell.available {
         background-color: #ffffff;

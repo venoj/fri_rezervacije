@@ -1,4 +1,3 @@
-/* frontend/src/App.css */
 .App {
   display: flex;
   flex-direction: column;
@@ -259,7 +258,6 @@ main {
   opacity: 0.6;
 }
 
-/* Loading states */
 .sidebar p {
   text-align: center;
   color: #6b7280;
@@ -287,7 +285,6 @@ main {
   to { transform: rotate(360deg); }
 }
 
-/* Improved responsive design */
 @media (max-width: 1200px) {
   .content {
     flex-direction: column;

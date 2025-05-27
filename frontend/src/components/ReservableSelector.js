@@ -1,4 +1,3 @@
-// frontend/src/components/ReservableSelector.js
 import React, { useState } from 'react';
 import '../styles/ReservableSelector.css';
 
@@ -6,7 +5,6 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
   const [searchTerm, setSearchTerm] = useState('');
   const [selectAll, setSelectAll] = useState(false);
 
-  // Filter reservables based on search term
   const filteredReservables = reservables?.results?.filter(reservable => {
     const searchField = selectedType === 'classroom' ? reservable.slug : reservable.name;
     return (searchField && searchField.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -53,7 +51,6 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
         
       </div>
 
-      {/* Pagination info */}
       <div className="reservable-pagination-info">
         <span className="reservable-pagination-count">
           {reservables?.results?.length > 0 ? ((currentPage - 1) * reservables.results.length + 1) : 0}

@@ -13,9 +13,8 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 	const headerRef = useRef(null);
 	const cellRefs = useRef([]);
 
-	const HOUR_CELL_WIDTH = 90; // px
+	const HOUR_CELL_WIDTH = 90;
 
-	// Generate time slots (from 7 AM to 10 PM in 1-hour intervals)
 	const generateTimeSlots = () => {
 		const slots = [];
 		for (let hour = 7; hour <= 22; hour++) {
@@ -30,7 +29,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 
 	const timeSlots = generateTimeSlots();
 
-	// Fetch reservations for all reservables from API
 	useEffect(() => {
 		const fetchAllReservations = async () => {
 			if (!reservables || reservables.length === 0) return;
@@ -71,24 +69,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 		fetchAllReservations();
 	}, [reservables, startDate]);
 
-	// Get reservation for a specific slot
-	const getReservationForSlot = (reservableId, hour) => {
-		const reservableReservations = reservations[reservableId] || [];
-		
-		return reservableReservations.find(reservation => {
-			const startTime = new Date(reservation.start);
-			const endTime = new Date(reservation.end);
-			
-			const slotStart = new Date(startDate);
-			slotStart.setHours(hour, 0, 0, 0);
-			const slotEnd = new Date(startDate);
-			slotEnd.setHours(hour + 1, 0, 0, 0);
-
-			return startTime < slotEnd && endTime > slotStart;
-		});
-	};
-
-	// Format date for display
 	const formatDate = (date) => {
 		return date.toLocaleDateString('sl-SI', {
 			weekday: 'long',
@@ -98,7 +78,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 		});
 	};
 
-	// Format time for display
 	const formatTime = (timeString) => {
 		const date = new Date(timeString);
 		return date.toLocaleTimeString('sl-SI', { hour: '2-digit', minute: '2-digit' });
@@ -145,7 +124,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 
 	return (
 		<div className="timeline-grid-container">
-			{/* Header */}
 			<div className="timeline-header">
 				<div className="timeline-header-title">
 					<h2 className="timeline-header-text">
@@ -154,7 +132,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 				</div>
 			</div>
 
-			{/* Timeline Grid */}
 			<div className="timeline-table-wrapper">
 				<table className="timeline-table">
 					<colgroup>
@@ -255,7 +232,6 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 				</table>
 			</div>
 
-			{/* Reservation Details Modal */}
 			{selectedReservation && (
 				<div className="modal-overlay" onClick={handleCloseModal}>
 					<div className="modal-content" onClick={e => e.stopPropagation()}>
