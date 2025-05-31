@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, Filter, Database } from 'lucide-react';
 import '../styles/FilterAndDateControls.css';
 
@@ -26,6 +26,23 @@ function FilterAndDateControls({
     rezervacije_fri: 'FRI rezervacije',
     rezervacije_fkkt: 'FKKT rezervacije'
   };
+
+  const [selectedReservables, setSelectedReservables] = useState([]);
+  const [isReservableSelectorOpen, setIsReservableSelectorOpen] = useState(false);
+
+  // Natural sort function for classroom numbers
+  const naturalSort = (a, b) => {
+    if (selectedType === 'classroom') {
+      const aSlug = a.slug || '';
+      const bSlug = b.slug || '';
+      return aSlug.localeCompare(bSlug, undefined, { numeric: true, sensitivity: 'base' });
+    }
+    return (a.name || '').localeCompare(b.name || '');
+  };
+
+  useEffect(() => {
+    // ... existing code ...
+  }, []);
 
   return (
     <div className="filters">

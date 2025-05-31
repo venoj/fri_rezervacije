@@ -5,11 +5,21 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
   const [searchTerm, setSearchTerm] = useState('');
   const [selectAll, setSelectAll] = useState(false);
 
+  // Natural sort function for classroom numbers
+  const naturalSort = (a, b) => {
+    if (selectedType === 'classroom') {
+      const aSlug = a.slug || '';
+      const bSlug = b.slug || '';
+      return aSlug.localeCompare(bSlug, undefined, { numeric: true, sensitivity: 'base' });
+    }
+    return (a.name || '').localeCompare(b.name || '');
+  };
+
   const filteredReservables = reservables?.results?.filter(reservable => {
     const searchField = selectedType === 'classroom' ? reservable.slug : reservable.name;
     return (searchField && searchField.toLowerCase().includes(searchTerm.toLowerCase())) ||
            (reservable.description && reservable.description.toLowerCase().includes(searchTerm.toLowerCase()));
-  }) || [];
+  }).sort(naturalSort) || [];
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -49,6 +59,24 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
           </div>
         </div>
       </div>
+
+      {selectedReservables.length > 0 && (
+        <div className="selection-summary">
+          <div className="summary-content">
+            <span className="summary-text">
+              {selectedReservables.length} izbrano
+            </span>
+            <button 
+              onClick={() => {
+                selectedReservables.forEach(id => onReservableSelect(id));
+              }}
+              className="clear-selection-btn"
+            >
+              Počisti izbor
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="reservables-list">
         {filteredReservables.length === 0 ? (
@@ -92,23 +120,7 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
         )}
       </div>
 
-      {selectedReservables.length > 0 && (
-        <div className="selection-summary">
-          <div className="summary-content">
-            <span className="summary-text">
-              {selectedReservables.length} izbrano
-            </span>
-            <button 
-              onClick={() => {
-                selectedReservables.forEach(id => onReservableSelect(id));
-              }}
-              className="clear-selection-btn"
-            >
-              Počisti izbor
-            </button>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 }

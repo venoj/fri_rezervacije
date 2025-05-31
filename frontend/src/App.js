@@ -16,7 +16,48 @@ function App() {
 	const [reservables, setReservables] = useState({ results: [], count: 0, next: null, previous: null });
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [startDate, setStartDate] = useState(new Date());
+	const [startDate, setStartDate] = useState(() => {
+		// Get date from URL or use today's date
+		const params = new URLSearchParams(window.location.search);
+		const dateParam = params.get('date');
+		const date = dateParam ? new Date(dateParam) : new Date();
+		
+		// If no date in URL, set it
+		if (!dateParam) {
+			const newParams = new URLSearchParams(window.location.search);
+			newParams.set('date', date.toISOString().split('T')[0]);
+			window.history.replaceState({}, '', `${window.location.pathname}?${newParams.toString()}`);
+		}
+		
+		return date;
+	});
+
+	// Update URL when date changes
+	useEffect(() => {
+		const params = new URLSearchParams(window.location.search);
+		const currentDate = params.get('date');
+		const newDate = startDate.toISOString().split('T')[0];
+		
+		// Only push new state if the date actually changed
+		if (currentDate !== newDate) {
+			params.set('date', newDate);
+			window.history.pushState({ date: newDate }, '', `${window.location.pathname}?${params.toString()}`);
+		}
+	}, [startDate]);
+
+	// Handle browser back/forward navigation
+	useEffect(() => {
+		const handlePopState = (event) => {
+			const params = new URLSearchParams(window.location.search);
+			const dateParam = params.get('date');
+			if (dateParam) {
+				setStartDate(new Date(dateParam));
+			}
+		};
+
+		window.addEventListener('popstate', handlePopState);
+		return () => window.removeEventListener('popstate', handlePopState);
+	}, []);
 
 	const typeLabels = {
 		classroom: 'učilnica',

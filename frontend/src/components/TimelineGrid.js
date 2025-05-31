@@ -8,6 +8,8 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [selectedReservation, setSelectedReservation] = useState(null);
+	const [newReservation, setNewReservation] = useState(null);
+	const [reservationReason, setReservationReason] = useState('');
 	const [firstColWidth, setFirstColWidth] = useState(200);
 
 	const headerRef = useRef(null);
@@ -28,6 +30,16 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 	};
 
 	const timeSlots = generateTimeSlots();
+
+	// Natural sort function for classroom numbers
+	const naturalSort = (a, b) => {
+		if (selectedType === 'classroom') {
+			const aSlug = a.slug || '';
+			const bSlug = b.slug || '';
+			return aSlug.localeCompare(bSlug, undefined, { numeric: true, sensitivity: 'base' });
+		}
+		return (a.name || '').localeCompare(b.name || '');
+	};
 
 	useEffect(() => {
 		const fetchAllReservations = async () => {
@@ -87,8 +99,37 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 		setSelectedReservation(reservation);
 	};
 
+	const handleEmptyCellClick = (reservable, hour) => {
+		const start = new Date(startDate);
+		start.setHours(hour, 0, 0, 0);
+		const end = new Date(startDate);
+		end.setHours(hour + 1, 0, 0, 0);
+		setNewReservation({
+			reservable,
+			start,
+			end
+		});
+		setReservationReason('');
+	};
+
+	const handleEndTimeChange = (e) => {
+		const [hours] = e.target.value.split(':').map(Number);
+		const newEnd = new Date(newReservation.start);
+		newEnd.setHours(hours, 0, 0, 0);
+		
+		// Ensure end time is after start time
+		if (newEnd > newReservation.start) {
+			setNewReservation(prev => ({
+				...prev,
+				end: newEnd
+			}));
+		}
+	};
+
 	const handleCloseModal = () => {
 		setSelectedReservation(null);
+		setNewReservation(null);
+		setReservationReason('');
 	};
 
 	if (loading) {
@@ -153,7 +194,7 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 						</tr>
 					</thead>
 					<tbody>
-						{reservables.map((reservable, rowIdx) => {
+						{[...reservables].sort(naturalSort).map((reservable, rowIdx) => {
 							const reservableReservations = reservations[reservable.id] || [];
 							const sortedReservations = [...reservableReservations].sort((a, b) => new Date(a.start) - new Date(b.start));
 
@@ -180,22 +221,12 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 											key={`${reservable.id}-${reservation.id}`}
 											className={`timeline-cell timeline-cell-reserved${selectedReservables.includes(reservable.id) ? ' selected' : ''}`}
 											colSpan={coveredSlots}
-											style={{ padding: 0, whiteSpace: 'normal' }}
+											style={{ 
+												padding: 0, 
+												backgroundColor: 'rgba(230, 57, 70, 0.2)', // Light red color
+											}}
 											onClick={() => handleReservationClick(reservation)}
-										>
-											<div className="reservation-block">
-												<div className="reservation-title">{reservation.reason || 'Rezervacija'}</div>
-												{reservation.created_by && (
-													<div className="reservation-meta">
-														<User className="reservation-meta-icon" />
-														<span>{reservation.created_by}</span>
-													</div>
-												)}
-												<div className="reservation-meta">
-													<span>{formatTime(reservation.start)} - {formatTime(reservation.end)}</span>
-												</div>
-											</div>
-										</td>
+										/>
 									);
 									i += coveredSlots;
 								} else {
@@ -204,6 +235,7 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 											key={`${reservable.id}-${slotHour}`}
 											className={`timeline-cell timeline-cell-available${selectedReservables.includes(reservable.id) ? ' selected' : ''}`}
 											style={{ padding: 0 }}
+											onClick={() => handleEmptyCellClick(reservable, slotHour)}
 										></td>
 									);
 									i++;
@@ -272,6 +304,91 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 									<span className="modal-detail-value">{selectedReservation.requirements.join(', ')}</span>
 								</div>
 							)}
+						</div>
+					</div>
+				</div>
+			)}
+
+			{newReservation && (
+				<div className="modal-overlay" onClick={handleCloseModal}>
+					<div className="modal-content" onClick={e => e.stopPropagation()}>
+						<button className="modal-close" onClick={handleCloseModal} aria-label="Zapri">
+							<X className="modal-close-icon" />
+						</button>
+						<h2 className="modal-title">
+							<Info className="modal-title-icon" /> Nova rezervacija
+						</h2>
+						<div className="modal-details-grid">
+							<div className="modal-detail-row">
+								<span className="modal-detail-label">Objekt:</span>
+								<span className="modal-detail-value">
+									{selectedType === 'classroom' ? newReservation.reservable.slug : newReservation.reservable.name}
+								</span>
+							</div>
+							<div className="modal-detail-row">
+								<span className="modal-detail-label">Začetek:</span>
+								<span className="modal-detail-value">
+									{formatTime(newReservation.start)}
+								</span>
+							</div>
+							<div className="modal-detail-row">
+								<span className="modal-detail-label">Konec:</span>
+								<select
+									value={newReservation.end.getHours()}
+									onChange={(e) => {
+										const hours = parseInt(e.target.value);
+										const newEnd = new Date(newReservation.start);
+										newEnd.setHours(hours, 0, 0, 0);
+										
+										if (newEnd > newReservation.start) {
+											setNewReservation(prev => ({
+												...prev,
+												end: newEnd
+											}));
+										}
+									}}
+									className="time-select"
+								>
+									{Array.from({ length: 24 }, (_, i) => i).map(hour => (
+										<option 
+											key={hour} 
+											value={hour}
+											disabled={hour <= newReservation.start.getHours()}
+										>
+											{hour.toString().padStart(2, '0')}:00
+										</option>
+									))}
+								</select>
+							</div>
+							<div className="modal-detail-row">
+								<span className="modal-detail-label">Datum:</span>
+								<span className="modal-detail-value">{formatDate(newReservation.start)}</span>
+							</div>
+							<div className="modal-detail-row full-width">
+								<span className="modal-detail-label">Razlog:</span>
+								<input
+									type="text"
+									value={reservationReason}
+									onChange={(e) => setReservationReason(e.target.value)}
+									placeholder="Vnesite razlog za rezervacijo"
+									className="reason-input"
+								/>
+							</div>
+							<div className="modal-actions">
+								<button 
+									className="modal-button primary" 
+									onClick={() => {
+										// TODO: Implement reservation creation
+										handleCloseModal();
+									}}
+									disabled={!reservationReason.trim()}
+								>
+									Ustvari rezervacijo
+								</button>
+								<button className="modal-button secondary" onClick={handleCloseModal}>
+									Prekliči
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

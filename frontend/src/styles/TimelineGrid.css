@@ -222,7 +222,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     z-index: 1000;
 }
 
@@ -234,8 +234,6 @@
     max-width: 500px;
     width: 90%;
     position: relative;
-
-    margin-top: 30px;
 }
 
 .modal-close {
@@ -482,8 +480,7 @@
     vertical-align: middle;
     padding: 0;
     min-width: 60px;
-    max-width: 1fr;
-    height: 60px;
+    /* height: 60px; */
     overflow: hidden;
     position: relative;
     white-space: nowrap;
@@ -506,7 +503,6 @@
     font-weight: 600;
     color: #495057;
     min-width: 60px;
-    max-width: 1fr;
 }
 
 .timeline-table td.grid-reservable-cell {
@@ -663,4 +659,117 @@
 
 .timeline-table-wrapper {
     overflow-x: scroll;
+}
+
+.modal-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.modal-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.modal-detail-label {
+    color: #666;
+    font-weight: 600;
+    min-width: 100px;
+    text-align: left;
+}
+
+.modal-detail-value {
+    color: #333;
+    text-align: right;
+    flex: 1;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-end;
+}
+
+.modal-button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.modal-button.primary {
+    background: #e63946;
+    color: white;
+}
+
+.modal-button.primary:hover {
+    background: #cc3340;
+}
+
+.modal-button.secondary {
+    background: #f8fafd;
+    color: #666;
+    border: 1px solid #e3eafc;
+}
+
+.modal-button.secondary:hover {
+    background: #f0f4f8;
+    color: #333;
+}
+
+.modal-detail-row.full-width {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.time-select,
+.reason-input {
+    padding: 8px 12px;
+    border: 1.5px solid #e3eafc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333;
+    background: #f8fafd;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.time-select {
+    width: 120px;
+    cursor: pointer;
+}
+
+.time-select:focus,
+.reason-input:focus {
+    outline: none;
+    border-color: #e63946;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(230, 57, 70, 0.2);
+}
+
+.time-select:hover,
+.reason-input:hover {
+    border-color: #e63946;
+    background: #fff;
+}
+
+.time-select option:disabled {
+    color: #ccc;
+    background: #f8f8f8;
+}
+
+.modal-button:disabled {
+    background: #f3f3f3;
+    color: #aaa;
+    cursor: not-allowed;
+    border: none;
 }
