@@ -74,6 +74,8 @@
     "noResults": "No results for \"{{searchTerm}}\"",
     "clearResults": "Clear search",
     "noObjects": "No objects available",
-    "location": "Location"
+    "location": "Location",
+    "searchSelected": "Search selected objects...",
+    "noSelectedObjects": "No objects selected"
   }
 } 

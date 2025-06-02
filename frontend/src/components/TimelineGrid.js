@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Info, X, Table, Trash2 } from 'lucide-react';
+import { Info, X, Table } from 'lucide-react';
 import { getBulkReservations, getReservableDetails, getClassroomResources, deleteReservation } from '../services/api';
 import { useTranslation } from 'react-i18next';
 import ReservableSelector from './ReservableSelector';
+import SelectedReservablesList from './SelectedReservablesList';
 import '../styles/TimelineGrid.css';
 
 // Cache for classroom resources
@@ -517,25 +518,8 @@ const TimelineGrid = ({ startDate, selectedType, selectedSet, reservables = [], 
 						<div className="modal-details-grid">
 							<div className="modal-detail-row full-width">
 								<span className="modal-detail-label">{t('timeline.selectObjects')}:</span>
-								<div className="selected-reservables">
-									{selectedReservablesForNew.map(id => {
-										const reservable = reservables.find(r => r.id === id);
-										return reservable ? (
-											<div key={id} className="selected-reservable-tag">
-												<span>{selectedType === 'classroom' ? reservable.slug : reservable.name}</span>
-												<button 
-													className="remove-reservable-btn"
-													onClick={() => handleRemoveReservable(id)}
-													aria-label={t('common.remove')}
-												>
-													<X size={14} />
-												</button>
-											</div>
-										) : null;
-									})}
-								</div>
-								<div className="reservable-selector-container">
-									<ReservableSelector
+								<div className="reservable-selection">
+									<SelectedReservablesList
 										reservables={reservables}
 										onReservableSelect={handleReservableSelect}
 										selectedReservables={selectedReservablesForNew}

@@ -74,6 +74,8 @@
     "noResults": "Ni rezultatov za \"{{searchTerm}}\"",
     "clearResults": "Počisti iskanje",
     "noObjects": "Na voljo ni nobenih objektov",
-    "location": "Lokacija"
+    "location": "Lokacija",
+    "searchSelected": "Išči izbrane objekte...",
+    "noSelectedObjects": "Ni izbranih objektov"
   }
 } 

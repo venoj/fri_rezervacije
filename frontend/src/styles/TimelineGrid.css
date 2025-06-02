@@ -684,6 +684,10 @@
     text-align: left;
 }
 
+.reservable-selection {
+    width: 100%;
+}
+
 .modal-detail-value {
     color: #333;
     text-align: right;
