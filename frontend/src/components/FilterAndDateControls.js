@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, Filter, Database } from 'lucide-react';
 import '../styles/FilterAndDateControls.css';
+import { useTranslation } from 'react-i18next';
+import { getTypeLabel, getSetLabel, typeLabels, setLabels } from '../constants/labels';
 
 function FilterAndDateControls({
   selectedSet,
@@ -13,36 +14,7 @@ function FilterAndDateControls({
   handleNextDay,
   handleToday
 }) {
-  const typeLabels = {
-    classroom: 'Učilnica',
-    vehicle: 'Vozilo',
-    teacher: 'Učitelj',
-    activity: 'Aktivnost',
-    equipment: 'Oprema',
-    group: 'Skupina',
-  };
-
-  const setLabels = {
-    rezervacije_fri: 'FRI rezervacije',
-    rezervacije_fkkt: 'FKKT rezervacije'
-  };
-
-  const [selectedReservables, setSelectedReservables] = useState([]);
-  const [isReservableSelectorOpen, setIsReservableSelectorOpen] = useState(false);
-
-  // Natural sort function for classroom numbers
-  const naturalSort = (a, b) => {
-    if (selectedType === 'classroom') {
-      const aSlug = a.slug || '';
-      const bSlug = b.slug || '';
-      return aSlug.localeCompare(bSlug, undefined, { numeric: true, sensitivity: 'base' });
-    }
-    return (a.name || '').localeCompare(b.name || '');
-  };
-
-  useEffect(() => {
-    // ... existing code ...
-  }, []);
+  const { t } = useTranslation();
 
   return (
     <div className="filters">
@@ -50,7 +22,7 @@ function FilterAndDateControls({
         <div className="filter-item">
           <label htmlFor="set-select">
             <Database size={16} />
-            <span>NABOR</span>
+            <span>{t('filters.set')}</span>
           </label>
           <select 
             id="set-select" 
@@ -58,8 +30,8 @@ function FilterAndDateControls({
             onChange={(e) => setSelectedSet(e.target.value)}
             className="filter-select"
           >
-            {Object.entries(setLabels).map(([value, label]) => (
-              <option key={value} value={value}>{label}</option>
+            {Object.keys(setLabels).map((value) => (
+              <option key={value} value={value}>{getSetLabel(value)}</option>
             ))}
           </select>
         </div>
@@ -67,7 +39,7 @@ function FilterAndDateControls({
         <div className="filter-item">
           <label htmlFor="type-select">
             <Filter size={16} />
-            <span>TIP</span>
+            <span>{t('filters.type')}</span>
           </label>
           <select 
             id="type-select" 
@@ -75,8 +47,8 @@ function FilterAndDateControls({
             onChange={(e) => setSelectedType(e.target.value)}
             className="filter-select"
           >
-            {Object.entries(typeLabels).map(([value, label]) => (
-              <option key={value} value={value}>{label}</option>
+            {Object.keys(typeLabels).map((value) => (
+              <option key={value} value={value}>{getTypeLabel(value)}</option>
             ))}
           </select>
         </div>
@@ -86,17 +58,17 @@ function FilterAndDateControls({
         <button 
           onClick={handlePreviousDay} 
           className="nav-button"
-          aria-label="Prejšnji dan"
+          aria-label={t('filters.previousDay')}
         >
           <ChevronLeft size={20} />
         </button>
         <button 
           onClick={handleToday} 
           className="today-button"
-          aria-label="Danes"
+          aria-label={t('filters.today')}
         >
           <Calendar size={16} />
-          <span>Danes</span>
+          <span>{t('filters.today')}</span>
         </button>
         <div className="date-input-wrapper">
           <Calendar size={16} className="date-input-icon" />
@@ -105,13 +77,13 @@ function FilterAndDateControls({
             value={selectedDate}
             onChange={handleDateChange}
             className="date-input"
-            aria-label="Izberi datum"
+            aria-label={t('filters.selectDate')}
           />
         </div>
         <button 
           onClick={handleNextDay} 
           className="nav-button"
-          aria-label="Naslednji dan"
+          aria-label={t('filters.nextDay')}
         >
           <ChevronRight size={20} />
         </button>

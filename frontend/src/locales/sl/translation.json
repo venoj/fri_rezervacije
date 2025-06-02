@@ -1,0 +1,79 @@
+{
+  "types": {
+    "classroom": "Učilnica",
+    "vehicle": "Vozilo",
+    "teacher": "Učitelj",
+    "activity": "Aktivnost",
+    "equipment": "Oprema",
+    "group": "Skupina"
+  },
+  "sets": {
+    "rezervacije_fri": "FRI rezervacije",
+    "rezervacije_fkkt": "FKKT rezervacije"
+  },
+  "common": {
+    "loading": "Nalaganje...",
+    "error": "Napaka",
+    "retry": "Poskusi znova",
+    "close": "Zapri",
+    "cancel": "Prekliči",
+    "save": "Shrani",
+    "delete": "Izbriši",
+    "edit": "Uredi",
+    "create": "Ustvari",
+    "search": "Išči",
+    "filter": "Filtriraj",
+    "noResults": "Ni najdenih rezultatov",
+    "select": "Izberi",
+    "date": "Datum",
+    "time": "Čas",
+    "reason": "Razlog",
+    "details": "Podrobnosti",
+    "reservations": "Rezervacije",
+    "properties": "Lastnosti"
+  },
+  "filters": {
+    "set": "NABOR",
+    "type": "TIP",
+    "today": "Danes",
+    "previousDay": "Prejšnji dan",
+    "nextDay": "Naslednji dan",
+    "selectDate": "Izberi datum"
+  },
+  "timeline": {
+    "loading": "Nalaganje rezervacij...",
+    "error": "Prišlo je do napake",
+    "errorMessage": "Napaka pri pridobivanju rezervacij.",
+    "noObjects": "Na voljo ni nobenih objektov",
+    "reservationsFor": "Pregled rezervacij za",
+    "classroomProperties": "Lastnosti učilnic",
+    "newReservation": "Nova rezervacija",
+    "reservationDetails": "Podrobnosti rezervacije",
+    "title": "Naziv",
+    "startTime": "Začetek",
+    "endTime": "Konec",
+    "reservedBy": "Rezerviral",
+    "owners": "Lastniki",
+    "requirements": "Zahteve",
+    "createReservation": "Ustvari rezervacijo",
+    "enterReason": "Vnesite razlog za rezervacijo",
+    "classroomDetails": "Podrobnosti učilnice",
+    "name": "Naziv",
+    "quantity": "Količina",
+    "deleteReservation": "Izbriši rezervacijo",
+    "deleteConfirm": "Ali ste prepričani, da želite izbrisati to rezervacijo?",
+    "deleteSuccess": "Rezervacija uspešno izbrisana",
+    "deleteError": "Napaka pri brisanju rezervacije",
+    "selectObjects": "Dodaj več objektov"
+  },
+  "selector": {
+    "search": "Iskanje...",
+    "clearSearch": "Počisti iskanje",
+    "selected": "izbrano",
+    "clearSelection": "Počisti izbor",
+    "noResults": "Ni rezultatov za \"{{searchTerm}}\"",
+    "clearResults": "Počisti iskanje",
+    "noObjects": "Na voljo ni nobenih objektov",
+    "location": "Lokacija"
+  }
+} 

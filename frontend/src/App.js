@@ -6,8 +6,11 @@ import TimelineGrid from './components/TimelineGrid';
 import './styles/TimelineGrid.css';
 import friLogo from './assets/fri-logo.png';
 import FilterAndDateControls from './components/FilterAndDateControls';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+	const { t } = useTranslation();
 	const [selectedSet, setSelectedSet] = useState('rezervacije_fri');
 	const [selectedType, setSelectedType] = useState('classroom');
 	const [selectedReservables, setSelectedReservables] = useState([]);
@@ -58,15 +61,6 @@ function App() {
 		window.addEventListener('popstate', handlePopState);
 		return () => window.removeEventListener('popstate', handlePopState);
 	}, []);
-
-	const typeLabels = {
-		classroom: 'učilnica',
-		vehicle: 'vozilo',
-		teacher: 'učitelj',
-		activity: 'aktivnost',
-		equipment: 'oprema',
-		group: 'skupina',
-	};
 
 	useEffect(() => {
 		const fetchSets = async () => {
@@ -172,7 +166,8 @@ function App() {
 			<header className="App-header modern-header">
 				<div className="header-content">
 					<img src={friLogo} alt="FRI Logo" className="fri-logo" />
-					<h1>Rezervacije</h1>
+					<h1>{t('common.reservations')}</h1>
+					<LanguageSwitcher />
 				</div>
 			</header>
 			<main>
@@ -192,9 +187,8 @@ function App() {
 
 				<div className="content">
 					<aside className="sidebar">
-						<h2>Izberite {selectedType}</h2>
 						{loading ? (
-							<p class="loading">Nalaganje...</p>
+							<p className="loading">{t('common.loading')}</p>
 						) : (
 							<ReservableSelector 
 								reservables={reservables} 

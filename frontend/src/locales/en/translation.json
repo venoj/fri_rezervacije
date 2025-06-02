@@ -1,0 +1,79 @@
+{
+  "types": {
+    "classroom": "Classroom",
+    "vehicle": "Vehicle",
+    "teacher": "Teacher",
+    "activity": "Activity",
+    "equipment": "Equipment",
+    "group": "Group"
+  },
+  "sets": {
+    "rezervacije_fri": "FRI Reservations",
+    "rezervacije_fkkt": "FKKT Reservations"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Try Again",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results found",
+    "select": "Select",
+    "date": "Date",
+    "time": "Time",
+    "reason": "Reason",
+    "details": "Details",
+    "reservations": "Reservations",
+    "properties": "Properties"
+  },
+  "filters": {
+    "set": "SET",
+    "type": "TYPE",
+    "today": "Today",
+    "previousDay": "Previous day",
+    "nextDay": "Next day",
+    "selectDate": "Select date"
+  },
+  "timeline": {
+    "loading": "Loading reservations...",
+    "error": "An error occurred",
+    "errorMessage": "Error loading reservations.",
+    "noObjects": "No objects available",
+    "reservationsFor": "Reservations for",
+    "classroomProperties": "Classroom Properties",
+    "newReservation": "New Reservation",
+    "reservationDetails": "Reservation Details",
+    "title": "Title",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "reservedBy": "Reserved by",
+    "owners": "Owners",
+    "requirements": "Requirements",
+    "createReservation": "Create Reservation",
+    "enterReason": "Enter reservation reason",
+    "classroomDetails": "Classroom Details",
+    "name": "Name",
+    "quantity": "Quantity",
+    "deleteReservation": "Delete Reservation",
+    "deleteConfirm": "Are you sure you want to delete this reservation?",
+    "deleteSuccess": "Reservation deleted successfully",
+    "deleteError": "Error deleting reservation",
+    "selectObjects": "Add more objects"
+  },
+  "selector": {
+    "search": "Search...",
+    "clearSearch": "Clear search",
+    "selected": "selected",
+    "clearSelection": "Clear selection",
+    "noResults": "No results for \"{{searchTerm}}\"",
+    "clearResults": "Clear search",
+    "noObjects": "No objects available",
+    "location": "Location"
+  }
+} 

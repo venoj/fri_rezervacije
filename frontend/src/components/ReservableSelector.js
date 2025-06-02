@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import '../styles/ReservableSelector.css';
 
 function ReservableSelector({ reservables, onReservableSelect, selectedReservables = [], selectedType }) {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectAll, setSelectAll] = useState(false);
 
-  // Natural sort function for classroom numbers
   const naturalSort = (a, b) => {
     if (selectedType === 'classroom') {
       const aSlug = a.slug || '';
@@ -15,11 +15,17 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
     return (a.name || '').localeCompare(b.name || '');
   };
 
-  const filteredReservables = reservables?.results?.filter(reservable => {
-    const searchField = selectedType === 'classroom' ? reservable.slug : reservable.name;
-    return (searchField && searchField.toLowerCase().includes(searchTerm.toLowerCase())) ||
-           (reservable.description && reservable.description.toLowerCase().includes(searchTerm.toLowerCase()));
-  }).sort(naturalSort) || [];
+  const filteredReservables = (Array.isArray(reservables) ? reservables : reservables?.results || [])
+    .filter(reservable => !selectedReservables.includes(reservable.id))
+    .filter(reservable => {
+      const searchTermLower = searchTerm.toLowerCase();
+      return (
+        (reservable.name && reservable.name.toLowerCase().includes(searchTermLower)) ||
+        (reservable.slug && reservable.slug.toLowerCase().includes(searchTermLower)) ||
+        (reservable.description && reservable.description.toLowerCase().includes(searchTermLower))
+      );
+    })
+    .sort(naturalSort);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -29,12 +35,6 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
     setSearchTerm('');
   };
 
-  React.useEffect(() => {
-    const allFilteredSelected = filteredReservables.length > 0 && 
-      filteredReservables.every(reservable => selectedReservables.includes(reservable.id));
-    setSelectAll(allFilteredSelected);
-  }, [filteredReservables, selectedReservables]);
-
   return (
     <div className="reservable-selector">
       <div className="selector-header">
@@ -42,7 +42,7 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
           <div className="search-input-wrapper">
             <input
               type="text"
-              placeholder="Iskanje..."
+              placeholder={t('selector.search')}
               value={searchTerm}
               onChange={handleSearchChange}
               className="search-input"
@@ -51,45 +51,27 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
               <button 
                 onClick={clearSearch}
                 className="clear-search-btn"
-                aria-label="Počisti iskanje"
+                aria-label={t('selector.clearSearch')}
               >
-                x
+                ×
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {selectedReservables.length > 0 && (
-        <div className="selection-summary">
-          <div className="summary-content">
-            <span className="summary-text">
-              {selectedReservables.length} izbrano
-            </span>
-            <button 
-              onClick={() => {
-                selectedReservables.forEach(id => onReservableSelect(id));
-              }}
-              className="clear-selection-btn"
-            >
-              Počisti izbor
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className="reservables-list">
         {filteredReservables.length === 0 ? (
           <div className="no-results">
             {searchTerm ? (
               <>
-                <p>Ni rezultatov za "{searchTerm}"</p>
+                <p>{t('selector.noResults', { searchTerm })}</p>
                 <button onClick={clearSearch} className="clear-results-btn">
-                  Počisti iskanje
+                  {t('selector.clearResults')}
                 </button>
               </>
             ) : (
-              <p>Ni na voljo nobenih objektov</p>
+              <p>{t('selector.noObjects')}</p>
             )}
           </div>
         ) : (
@@ -97,14 +79,11 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
             {filteredReservables.map(reservable => (
               <li 
                 key={reservable.id} 
-                className={`reservable-item ${selectedReservables.includes(reservable.id) ? 'selected' : ''}`}
+                className="reservable-item"
                 onClick={() => onReservableSelect(reservable.id)}
               >
                 <div className="reservable-content">
                   <div className="reservable-info">
-                    {selectedReservables.includes(reservable.id) && (
-                      <span className="checkmark">✓</span>
-                    )}
                     <span className="reservable-name">{selectedType === 'classroom' ? reservable.slug : reservable.name}</span>
                     {reservable.description && (
                       <span className="reservable-description">{reservable.description}</span>
@@ -119,8 +98,6 @@ function ReservableSelector({ reservables, onReservableSelect, selectedReservabl
           </ul>
         )}
       </div>
-
-      
     </div>
   );
 }
